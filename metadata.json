@@ -1,0 +1,37 @@
+{
+  "module_type": "update",
+  "hw_families": ["smc_gen_9"],
+  "flags": [],
+  "library_modules": ["nutanix.tools", "nutanix.hypervisor_tools"],
+  "enumeration_platforms": ["ahv"],
+  "update_platforms": ["phoenix"],
+  "minimum_interface_version": {
+    "ahv": 2.0
+  },
+  "managed_entities":
+  [
+    {
+      "entity_class": "BMCs",
+      "entity_model": "BMC Firmware",
+      "description": "Current BMC firmware version",
+      "entity_type": "Firmware",
+      "flags": [],
+      "current_version": "1.0",
+      "versions": [
+        {
+          "entity_class": "BIOS",
+          "entity_model": "BIOS for gen9",
+          "status": "recommended",
+          "url": "http://endor.dyn.nutanix.com/hw_eng/Data/M2/Firmware/Intel/bios-v1.bin",
+          "tag_list": [],
+          "flag_list": [],
+          "image": "bios-v1",
+          "version": "1.5",
+          "shasum": "1ec0baf88cb5433b088f7478de6bf2466849b2a39c46cea76ed5d224fbbfe99b",
+          "update_library_list": [],
+          "name": "bios-v1"
+       }
+      ]
+    }
+  ]
+}
