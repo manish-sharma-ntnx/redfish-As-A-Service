@@ -1,10 +1,6 @@
 #
 # Copyright (c) 2020 Nutanix Inc. All rights reserved.
 #
-# Author: venkatesh.konangi@nutanix.com
-#
-# DARK-SITE RIM build script.
-#
 
 #pylint: disable=broad-except
 import env
