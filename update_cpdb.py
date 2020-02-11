@@ -239,7 +239,7 @@ def download_rim_url(url):
 def add_available_versions(uuid, entities):
     li = LcmInterface()
     cu = CpdbUtils.get_instance(li)
-    entity_uuid = "uuid"
+    entity_uuid = uuid
     entity_class = entities.get("entity_class")
     entity_version = entities.get("current_version")
     version_list = entities.get("versions")
@@ -279,13 +279,13 @@ def update_entities(entities):
     for node_uuid in node_uuids:
         cu = CpdbUtils.get_instance(li)
         inventory_out = []
-        inventory_out.extend(entities.get("entity_class"))
-        inventory_out.extend("None")
-        inventory_out.extend(entities.get("entity_model"))
-        inventory_out.extend(entities.get("description"))
-        inventory_out.extend(entities.get("current_version"))
-        inventory_out.extend("1")
-        inventory_out.extend(entities.get("entity_type"))
+        inventory_out.append(entities.get("entity_class"))
+        inventory_out.append("None")
+        inventory_out.append(entities.get("entity_model"))
+        inventory_out.append(entities.get("description"))
+        inventory_out.append(entities.get("current_version"))
+        inventory_out.append("1")
+        inventory_out.append(entities.get("entity_type"))
         
         print("inventory %s" % inventory_out)
         
@@ -319,7 +319,7 @@ def update_entities(entities):
             print "Not able to update %s" % entities.get("entity_class")
             sys.exit(1)
         print "updating Available version DB"
-        add_available_versions(uuid, entities)
+        add_available_versions(db_entry.value.uuid, entities)
     return node_uuids
 
 def delete_available_db():
