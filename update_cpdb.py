@@ -240,7 +240,7 @@ def get_current_version(uuid, entity):
   #proto_dict = MessageToDict(proto)
   url = "http://localhost:8004/components/1234" # +get_node_uuid
   data = requests.get(url)
-  components_info = = data.json()["components"]
+  components_info = data.json()["components"]
   bmc = components_info["bmc"][0]["version"]
   bmc = bmc.split()[0]
   ".".join(bmc.split(".")[:-1])
