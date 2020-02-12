@@ -1,0 +1,39 @@
+@import (reference) '../../styles/main.less';
+
+.ntnx-status-icon {
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  padding: 2px;
+  border-radius: 3px;
+
+  .ntnx-icon.size-small:not(.check-mark-icon) {
+    width: 8px;
+    height: 8px;
+  }
+
+  // Colors
+  &.red {
+    background-color: @red-1;
+  }
+
+  &.green {
+    background-color: @green-1;
+  }
+
+  &.blue {
+    background-color: @blue-1;
+  }
+
+  &.yellow {
+    background-color: @yellow-1;
+  }
+
+  &.gray {
+    background-color: @light-gray-1;
+
+    &:hover {
+      background-color: @gray-1;
+    }
+  }
+}

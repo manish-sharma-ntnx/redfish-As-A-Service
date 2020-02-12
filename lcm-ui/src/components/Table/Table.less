@@ -1,0 +1,666 @@
+@import (reference) '../../styles/main.less';
+
+.ntnx.ntnx-table {
+  @default-row-line-height: 40px;
+  @border-radius: 4px;
+  @cell-left-right-padding: 15px;
+  @cell-padding: 5px @cell-left-right-padding;
+
+  .table-top-section {
+    margin-bottom: 15px;
+  }
+
+  .table-bottom-section {
+    margin-top: 15px;
+  }
+
+  .row-action-common() {
+    min-width: 40px;
+    width: 40px;
+    padding: 0;
+  }
+
+  .row-expand-common() {
+    min-width: 30px;
+    width: 30px;
+  }
+
+  .has-row-alert(@background-color) {
+    background-color: @background-color;
+    border-top-color: @background-color;
+
+    & + tr {
+      border-top-color: @background-color;
+    }
+  }
+
+  .has-cell-alert(@background-color) {
+    background-color: @background-color;
+    border-color: @background-color;
+
+    .ant-input-suffix {
+      // Aligns input cell alert icon with regular cell alert icon
+      right: @cell-left-right-padding;
+    }
+
+    input[type='text'] {
+      background-color: @background-color;
+      // Add padding-right so alert icon won't overlap input text
+      padding-right: 30px;
+
+      &:focus,
+      &:hover {
+        background-color: @background-color;
+      }
+    }
+  }
+
+  position: relative;
+
+  &[data-border='true'] {
+    // Do this for immediate children so we don't mess up a nested table
+    // inside a row
+    > .table-main-section {
+      border: 1px solid @border-color-2;
+      border-radius: @border-radius;
+    }
+  }
+
+  &[data-fixed-header='true'] {
+    > .table-main-section {
+      .table-body {
+        position: relative;
+        overflow-y: auto;
+        border-bottom-left-radius: @border-radius;
+        border-bottom-right-radius: @border-radius;
+      }
+    }
+  }
+
+  .table-main-section {
+    &.no-data {
+      .no-data-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: @white;
+        min-height: 90px;
+        color: @gray-1;
+        font-size: @default-font-size;
+        border-radius: @border-radius;
+      }
+    }
+
+    .table-search {
+      .ntnx-input-search {
+        height: @default-row-line-height;
+
+        &.ntnx.ntnx-input2.ant-input-affix-wrapper {
+          .ant-input-prefix {
+            left: 16px;
+          }
+
+          .ant-input {
+            padding-left: 37px;
+            background-color: @semi-white;
+            border-radius: 0;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1px solid @border-color-3;
+          }
+
+          &:hover {
+            .ant-input {
+              border-bottom-color: @border-color-3;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .has-row-focus {
+    tr {
+      &:hover {
+        > td {
+          background-color: transparent;
+          box-shadow: none;
+        }
+      }
+
+      &.-focus {
+        border-top: 1px solid @border-color-2;
+        border-bottom: 1px solid @border-color-2;
+        box-shadow: 0 9px 9px 0 fade(@black, 2%), 0 3px 3px 0 fade(@black, 2%),
+          0 1px 1px 0 fade(@black, 2%);
+      }
+    }
+  }
+
+  .table-header {
+    > table {
+      border-top-left-radius: @border-radius;
+      border-top-right-radius: @border-radius;
+    }
+  }
+
+  .table-body {
+    > table {
+      border-bottom-left-radius: @border-radius;
+      border-bottom-right-radius: @border-radius;
+    }
+  }
+
+  table {
+    table-layout: fixed;
+    border: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background: @white;
+    font-size: @default-font-size;
+    color: @dark-gray-1;
+    width: 100%;
+
+    .selection-column() {
+      min-width: 30px;
+      width: 30px;
+      padding: 0 0 0 15px;
+    }
+
+    thead {
+      tr {
+        &:first-child {
+          > th {
+            &:first-child {
+              // Prevent has-sorter border from poking out of the table's rounded border
+              border-top-left-radius: @border-radius;
+            }
+
+            &:last-child {
+              border-top-right-radius: @border-radius;
+            }
+          }
+        }
+      }
+
+      th {
+        font-size: @title-h4-font-size;
+        font-weight: @title-h4-font-weight;
+        color: @title-h4-font-color;
+        padding: @cell-padding;
+        height: @default-row-line-height;
+        text-align: left;
+        border-bottom: 1px solid @border-color-3;
+        position: relative;
+        word-break: break-word;
+
+        &[colspan] {
+          text-align: center;
+        }
+
+        &:not(:first-child) {
+          border-left: 1px solid @border-color-3;
+        }
+
+        &[data-text-align='right'] {
+          text-align: right;
+        }
+
+        &[data-text-align='center'] {
+          text-align: center;
+        }
+
+        &.selection-column {
+          .selection-column;
+
+          & + th {
+            border-left: none;
+          }
+        }
+
+        &.row-action {
+          .row-action-common;
+
+          border-left: none;
+        }
+
+        &.row-expand {
+          .row-expand-common;
+
+          border-left: none;
+        }
+
+        &.has-sorter {
+          &:hover {
+            cursor: pointer;
+            // Show box-shadow as border and make border as transparent as opposed
+            // to none to prevent the cell from shifting a bit
+            border-color: transparent;
+            box-shadow: 0 0 0 1px @border-color-1;
+          }
+
+          .ntnx-sorter {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 5px;
+          }
+        }
+
+        &.edit-row {
+          border-left: none;
+        }
+
+        .col-resizer {
+          cursor: col-resize;
+          width: 4px;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          right: -2px;
+          z-index: 1;
+        }
+      }
+    }
+
+    tbody {
+      &.has-row-expand {
+        tr {
+          // This will prevent the hover colors from cutting through the
+          // table border's rounded corners in the case where the last row
+          // is expandable but is currently not expanded. The reason why
+          // it uses the 2nd last child is because the last child is the
+          // row that gets shown when it is expanded
+          &:nth-last-child(2):not(.row-expanded) {
+            td {
+              &:first-child {
+                border-bottom-left-radius: @border-radius;
+              }
+
+              &:last-child {
+                border-bottom-right-radius: @border-radius;
+              }
+            }
+          }
+        }
+      }
+
+      tr {
+        width: 100%;
+        border-top: 1px solid @border-color-3;
+
+        &.expanded-row {
+          background-color: @semi-white;
+          color: @gray-2;
+
+          &.has-nested-table {
+            &:hover {
+              // The cells that pad the nested table on the sides shouldn't
+              // get highlighted
+              > td {
+                background-color: @semi-white;
+              }
+            }
+
+            .nested-table {
+              padding: 0;
+
+              table {
+                background-color: @semi-white;
+                color: @gray-2;
+
+                tr {
+                  &:hover {
+                    border-color: transparent;
+                    box-shadow: 0 0 0 1px @light-blue-3,
+                      0 1px 0 1px @light-blue-3;
+
+                    &:last-child {
+                      box-shadow: 0 -1px 0 1px @light-blue-3;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        &.-hide {
+          display: none;
+        }
+
+        &:hover {
+          background-color: @semi-white-blue;
+          border-top-color: @semi-white-blue;
+
+          > td {
+            .row-expand-icon {
+              background-color: @blue-1;
+
+              &:hover {
+                background-color: @dark-blue-3;
+              }
+
+              color: @white;
+            }
+
+            input {
+              &:focus {
+                background-color: @white;
+              }
+            }
+
+            .ntnx-link:not(.disabled) {
+              color: @link-primary-font-color;
+            }
+          }
+
+          & + tr {
+            border-top-color: @semi-white-blue;
+          }
+
+          &.has-expanded-row {
+            & + tr + tr {
+              border-top-color: @semi-white-blue;
+            }
+          }
+        }
+
+        &:first-child {
+          border-top: none;
+        }
+
+        &:last-child {
+          td {
+            &:first-child {
+              border-bottom-left-radius: @border-radius;
+            }
+
+            &:last-child {
+              border-bottom-right-radius: @border-radius;
+            }
+          }
+
+          &.-focus {
+            border-bottom: none;
+
+            td {
+              &.edit-row {
+                .edit-row-btns {
+                  &.-focus:not(.overflow) {
+                    box-shadow: 0 9px 9px 0 fade(@black, 2%),
+                      0 3px 3px 0 fade(@black, 2%), 0 1px 1px 0 fade(@black, 2%),
+                      -9px 0 9px 0 fade(@black, 2%),
+                      -3px 0 3px 0 fade(@black, 2%),
+                      -1px 0 1px 0 fade(@black, 2%), 1px 0 0 0 @border-color-2;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        &.has-row-error {
+          .has-row-alert(@semi-white-red);
+        }
+
+        &.has-row-warning {
+          .has-row-alert(@semi-white-yellow);
+        }
+
+        td {
+          height: @default-row-line-height;
+          padding: @cell-padding;
+          text-align: left;
+          word-break: break-word;
+
+          &[data-text-align='right'] {
+            text-align: right;
+          }
+
+          &[data-text-align='center'] {
+            text-align: center;
+          }
+
+          &.selection-column {
+            .selection-column;
+          }
+
+          &.row-expand {
+            .row-expand-common;
+
+            padding: 0 0 0 5px;
+          }
+
+          &.row-action {
+            .row-action-common;
+
+            .row-action-icon {
+              // This gives the icon a larger click area
+              width: 10px;
+              text-align: center;
+            }
+
+            .ntnx.ntnx-dropdown {
+              // Trigger menu
+              &.ant-dropdown-trigger {
+                > .ntnx-dropdown-title {
+                  color: @gray-2;
+
+                  &:hover {
+                    color: @blue-1;
+                  }
+                }
+              }
+            }
+          }
+
+          &.-editable {
+            padding: 0;
+
+            input[type='text'] {
+              padding: @cell-padding;
+            }
+
+            .ant-select-selection {
+              padding: @cell-padding;
+            }
+
+            .ntnx-input-affix {
+              height: 100%;
+            }
+          }
+
+          &.has-cell-warning {
+            .has-cell-alert(@semi-white-yellow);
+          }
+
+          &.has-cell-error {
+            .has-cell-alert(@semi-white-red);
+          }
+
+          span.ntnx.ntnx-input2.ant-input-affix-wrapper .ant-input:hover {
+            border-color: @blue-1;
+          }
+
+          input[type='text'] {
+            background-color: transparent;
+            box-shadow: none;
+            border: 1px solid transparent;
+            border-radius: 0;
+            width: 100%;
+            height: 100%;
+
+            &:focus {
+              border-color: @blue-1;
+              background-color: transparent;
+            }
+
+            &:hover {
+              border-color: @blue-1;
+              background-color: transparent;
+            }
+          }
+
+          &.edit-row {
+            position: relative;
+            border-left: none;
+
+            .edit-row-btns {
+              display: none;
+              padding: 0 5px;
+              height: @default-row-line-height;
+              width: 68px;
+              z-index: @table-edit-row-z-index;
+
+              .ntnx-button {
+                height: 16px;
+                width: 16px;
+              }
+
+              &.-focus {
+                position: absolute;
+                display: flex;
+                align-items: center;
+                background: @white;
+                top: 100%;
+                left: auto;
+                right: 0;
+                height: @default-row-line-height;
+                border-radius: 0;
+                border-left: 1px solid @border-color-2;
+                border-bottom: 1px solid @border-color-2;
+                box-shadow: 0 9px 9px 0 fade(@black, 2%),
+                  0 3px 3px 0 fade(@black, 2%), 0 1px 1px 0 fade(@black, 2%),
+                  -9px 0 9px 0 fade(@black, 2%), -3px 0 3px 0 fade(@black, 2%),
+                  -1px 0 1px 0 fade(@black, 2%);
+
+                &.overflow {
+                  top: 0;
+                  left: 2px;
+                  height: 100%;
+                  border: none;
+                  border-top-right-radius: @border-radius;
+                  border-bottom-right-radius: @border-radius;
+                  box-shadow: 0 9px 9px 0 fade(@black, 2%),
+                    0 3px 3px 0 fade(@black, 2%), 0 1px 1px 0 fade(@black, 2%),
+                    -1px 0 0 0 @light-gray-3, 0 0 0 1px @border-color-2;
+                }
+              }
+
+              .edit-row-btn {
+                margin: 0 0 0 8px;
+              }
+            }
+          }
+
+          .cell-layout-before-after {
+            // Before and after content will take up the two ends of the cell.
+            // The content will stretch to take up the remaining space in the middle
+            .cell-content {
+              flex: 1;
+            }
+          }
+
+          .row-expand-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 7px;
+            background-color: @light-blue-2;
+            color: @blue-2;
+            cursor: pointer;
+          }
+
+          // By default in table view we treat all links as
+          // navigation link which get the black color and only on hover
+          // get the blue color.
+          .ntnx-link {
+            color: inherit;
+          }
+
+          // When a column contain action type of link then.  Color is blue
+          &.action-col {
+            .ntnx-link {
+              color: @link-primary-font-color;
+            }
+          }
+        }
+
+        .row-empty {
+          padding: @cell-padding;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .error-message {
+    .flex-box-center();
+
+    flex-direction: column;
+    color: @red-1;
+    background-color: fade(@white, 90%);
+    font-size: @default-font-size;
+    // Give 1px margin so table border is not under overlay
+    margin: 1px;
+    // Define border radius to be same as table border radius so overlay does
+    // not cut the corner of table border
+    border-radius: @border-radius;
+
+    .retry-link {
+      margin-top: 20px;
+    }
+  }
+
+  .ntnx-loader {
+    .overlay-loader {
+      opacity: 1;
+      background-color: fade(@white, 90%);
+      // Give 1px margin so table border is not under overlay
+      margin: 1px;
+      // Define border radius to be same as table border radius so overlay does
+      // not cut the corner of table border
+      border-radius: @border-radius;
+    }
+  }
+
+  // Select Component
+  .ntnx-select-wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+
+    .ntnx-select {
+      width: 100%;
+      height: 100%;
+      border: 1px solid transparent;
+
+      &:hover {
+        border-color: @blue-1;
+      }
+
+      // Focused
+      &.ant-select-focused {
+        border-color: @blue-1;
+        background-color: @white;
+      }
+
+      .ant-select-selection {
+        height: 100%;
+        border: none;
+
+        .ant-select-selection__rendered {
+          height: 100%;
+        }
+      }
+
+      .ant-select-selection-selected-value {
+        line-height: 25px;
+      }
+    }
+
+    .triangle-up-down-icon {
+      top: 14px;
+    }
+  }
+}

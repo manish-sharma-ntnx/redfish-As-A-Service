@@ -1,0 +1,204 @@
+@import (reference) '../../styles/main.less';
+
+.ntnx-badge {
+  // Badge Colors
+  @badge-red: @red-1;
+  @badge-blue: @blue-1;
+  @badge-yellow: @yellow-1;
+  @badge-gray: @light-gray-1;
+  @badge-green: @green-1;
+
+  .badge-color-mixin(@bg-color, @border-color, @font-color) {
+    .badge-count {
+      &.badge-style,
+      &.dot-style {
+        background-color: @bg-color;
+      }
+      &.tag-style {
+        border: 1px solid @border-color;
+        color: @font-color;
+      }
+    }
+  }
+
+  // Badge color variations
+  &.blue {
+    .badge-color-mixin(@badge-blue, @light-blue-1, @blue-1);
+  }
+
+  &.red {
+    .badge-color-mixin(@badge-red, @light-red-1, @dark-red-3);
+  }
+
+  &.yellow {
+    .badge-color-mixin(@badge-yellow, @yellow-3, @dark-yellow-3);
+  }
+
+  &.gray {
+    .badge-color-mixin(@badge-gray, @light-gray-2, @gray-2);
+  }
+
+  &.green {
+    .badge-color-mixin(@badge-green, @light-green-1, @dark-green-3);
+  }
+
+  // Diagram colors
+  &.diagram-purple {
+    .badge-color-mixin(
+      @categorial-color-2,
+      fade(@categorial-color-2, 80%),
+      @categorial-color-2
+    );
+  }
+
+  &.diagram-aqua {
+    .badge-color-mixin(
+      @categorial-color-6,
+      fade(@categorial-color-6, 80%),
+      @categorial-color-6
+    );
+  }
+
+  &.diagram-orange {
+    .badge-color-mixin(
+      @categorial-color-8,
+      fade(@categorial-color-8, 80%),
+      @categorial-color-8
+    );
+  }
+
+  &.diagram-yellow {
+    .badge-color-mixin(
+      @categorial-color-4,
+      fade(@categorial-color-4, 80%),
+      @categorial-color-4
+    );
+  }
+
+  // Dark Theme
+  &.dark-bg {
+    .badge-text {
+      color: @tag-font-color-white;
+      font-weight: @tag-font-weight-white;
+
+      // Text Primary: Use for displaying non number based text.
+      &.text-primary {
+        .font-styling(
+          @default-font-size,
+          @tag-font-weight-white,
+          @label-line-height,
+          @tag-font-color-white
+        );
+      }
+
+      // Text Secondary: Use for displaying numbers only when in
+      // dot form (Except when used in tables).
+      &.text-secondary {
+        .font-styling(
+          @tag-font-size,
+          @font-weight-medium,
+          @tag-line-height,
+          @tag-font-color-white
+        );
+      }
+    }
+    // Gray for dark bg
+    &.gray {
+      .badge-count {
+        &.badge-style {
+          background-color: @gray-1;
+        }
+      }
+    }
+  }
+
+  // Processing animation
+  &.processing {
+    > .badge-count {
+      position: relative;
+
+      &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 1px solid @badge-blue;
+        content: '';
+        animation: badgeStatusProcessing 1.2s infinite ease-in-out;
+      }
+    }
+
+    @keyframes badgeStatusProcessing {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(2.4);
+        opacity: 0;
+      }
+    }
+  }
+
+  // Badge styles
+  .badge-count {
+    .tag-font-styling();
+
+    min-height: 20px;
+    min-width: 20px;
+    padding: 6px;
+    display: flex;
+    justify-content: center;
+
+    // Badge style for numbers
+    &.badge-style {
+      border-radius: 10px;
+    }
+
+    // Tag style for text
+    &.tag-style {
+      border-radius: 3px;
+      font-weight: @font-weight-medium;
+    }
+
+    // This is the mini dot style for numbers and text
+    &.dot-style {
+      min-width: 6px;
+      min-height: 6px;
+      height: 6px;
+      border-radius: 3px;
+      padding: 0;
+    }
+
+    &.opaque {
+      opacity: 0;
+    }
+  }
+
+  // The text label styling positioned on the right of the badge or dot.
+  .badge-text {
+    // Text Primary: Use for everything except numbers when in dot form.
+    &.text-primary {
+      .font-styling(
+        @default-font-size,
+        @font-weight-regular,
+        @label-line-height,
+        @dark-gray-1
+      );
+    }
+
+    // Text Secondary: Use for displaying numbers only when in
+    // dot form (Except when used in tables).
+    &.text-secondary {
+      .font-styling(
+        @tag-font-size,
+        @font-weight-medium,
+        @tag-line-height,
+        @gray-1
+      );
+    }
+  }
+}
