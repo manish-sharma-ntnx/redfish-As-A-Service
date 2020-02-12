@@ -243,7 +243,7 @@ def get_current_version(uuid, entity):
   components_info = data.json()["components"]
   bmc = components_info["bmc"][0]["version"]
   bmc = bmc.split()[0]
-  ".".join(bmc.split(".")[:-1])
+  bmc = ".".join(bmc.split(".")[:-1])
 
   if "bmc" in entity.lower(): return bmc
   if "bios" in entity.lower(): return components_info["bios"][0]["version"]
