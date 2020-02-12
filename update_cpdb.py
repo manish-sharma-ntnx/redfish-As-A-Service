@@ -23,15 +23,15 @@ from framework.main.utils.cpdb_utils import CpdbUtils
 import framework.main.consts as consts
 #from utils.zeus_utils import ZeusUtils
 
-_NCC_PATH = os.path.abspath("ncc/lib/py/")
-if os.path.isdir(_NCC_PATH):
-  sys.path[:] = filter(lambda path: not path.startswith("/home/nutanix"), sys.path)
-  sys.path.insert(0, "/home/nutanix/lib/python")
-  for path in os.listdir(_NCC_PATH):
-    sys.path.insert(0, os.path.join(_NCC_PATH, path))
+#_NCC_PATH = os.path.abspath("ncc/lib/py/")
+#if os.path.isdir(_NCC_PATH):
+#  sys.path[:] = filter(lambda path: not path.startswith("/home/nutanix"), sys.path)
+#  sys.path.insert(0, "/home/nutanix/lib/python")
+#  for path in os.listdir(_NCC_PATH):
+#    sys.path.insert(0, os.path.join(_NCC_PATH, path))
 
-from google.protobuf.json_format import MessageToDict
-from ncc.hardware_information_pb2 import HardWareInfoProto
+#from google.protobuf.json_format import MessageToDict
+#from ncc.hardware_information_pb2 import HardWareInfoProto
 
 BUILDS = "builds"
 COMPONENT = "component"
@@ -233,13 +233,17 @@ def download_image_url(image_dict):
         print("error occured on creating the file:%s", err)
 
 def get_current_version(uuid, entity):
-  HW_INFO_ZK_PATH = "/appliance/logical/hw_info/" + uuid
-  zk = genesis_utils.get_zk_session()
-  proto = HardWareInfoProto()
-  proto.ParseFromString(zk.get(HW_INFO_ZK_PATH))
-  proto_dict = MessageToDict(proto)
-  if "bmc" in entity.lower(): return proto_dict["bmc"]["firmwareRevision"]
-  if "bios" in entity.lower(): return proto_dict["bmc"]["version"]
+  #HW_INFO_ZK_PATH = "/appliance/logical/hw_info/" + uuid
+  #zk = genesis_utils.get_zk_session()
+  #proto = HardWareInfoProto()
+  #proto.ParseFromString(zk.get(HW_INFO_ZK_PATH))
+  #proto_dict = MessageToDict(proto)
+  url = "http://localhost:8004/components/1234" # +get_node_uuid
+  data = requests.get(url)
+  components_info = = data.json()["components"]
+
+  if "bmc" in entity.lower(): return components_info["bmc"]["version"]
+  if "bios" in entity.lower(): return components_info["bios"]["version"]
 
 def download_rim_url(url):
     """
