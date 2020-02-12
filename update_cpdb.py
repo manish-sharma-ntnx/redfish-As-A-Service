@@ -23,6 +23,15 @@ from framework.main.utils.cpdb_utils import CpdbUtils
 import framework.main.consts as consts
 #from utils.zeus_utils import ZeusUtils
 
+_NCC_PATH = os.path.abspath("ncc/lib/py/")
+if os.path.isdir(_NCC_PATH):
+  sys.path[:] = filter(lambda path: not path.startswith("/home/nutanix"), sys.path)
+  sys.path.insert(0, "/home/nutanix/lib/python")
+  for path in os.listdir(_NCC_PATH):
+    sys.path.insert(0, os.path.join(_NCC_PATH, path))
+
+from google.protobuf.json_format import MessageToDict
+from ncc.hardware_information_pb2 import HardWareInfoProto
 
 BUILDS = "builds"
 COMPONENT = "component"
@@ -223,6 +232,14 @@ def download_image_url(image_dict):
     except Exception as err:
         print("error occured on creating the file:%s", err)
 
+def get_current_version(uuid, entity):
+  HW_INFO_ZK_PATH = "/appliance/logical/hw_info/" + uuid
+  zk = genesis_utils.get_zk_session()
+  proto = HardWareInfoProto()
+  proto.ParseFromString(zk.get(HW_INFO_ZK_PATH))
+  proto_dict = MessageToDict(proto)
+  if "bmc" in entity.lower(): return proto_dict["bmc"]["firmwareRevision"]
+  if "bios" in entity.lower(): return proto_dict["bmc"]["version"]
 
 def download_rim_url(url):
     """
@@ -242,7 +259,7 @@ def add_available_versions(uuid, entities):
     cu = CpdbUtils.get_instance(li)
     entity_uuid = uuid
     entity_class = entities.get("entity_class")
-    entity_version = entities.get("current_version")
+    entity_version = get_current_version(uuid, entity_class)
     version_list = entities.get("versions")
     #version_list = [{
     #    "version": "PB42.500",
