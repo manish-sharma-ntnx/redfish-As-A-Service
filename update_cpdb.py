@@ -14,7 +14,7 @@ import urllib
 from optparse import OptionParser
 import requests
 import time
-#import cluster.genesis_utils as genesis_utils
+import cluster.genesis_utils as genesis_utils
 #import cluster.host_upgrade_helper as host_upgrade_helper
 from framework.main.lcm_framework_pb2 import LcmEntityV2 as LcmEntity
 from framework.main.lcm_framework_pb2 import LcmAvailableVersionV2 as LcmAvailableVersion
@@ -254,13 +254,14 @@ def download_rim_url(url):
     except Exception as err:
         print("Error occured in downloading the rim_config: %s", err)
 
-def add_available_versions(uuid, entities):
+def add_available_versions(uuid, node_uuid, entities):
     li = LcmInterface()
     cu = CpdbUtils.get_instance(li)
     entity_uuid = uuid
     entity_class = entities.get("entity_class")
-    entity_version = get_current_version(uuid, entity_class)
+    entity_version = get_current_version(node_uuid, entity_class)
     version_list = entities.get("versions")
+    print ("updating : %s:%s:%s:%s" % (entity_uuid, entity_class, entity_version, version_list))
     #version_list = [{
     #    "version": "PB42.500",
     #    "status": "recommended",
@@ -303,7 +304,8 @@ def update_entities(entities):
         inventory_out.append("None")
         inventory_out.append(entities.get("entity_model"))
         inventory_out.append(entities.get("description"))
-        inventory_out.append(entities.get("current_version"))
+        inventory_out.append(get_current_version(node_uuid, entities.get("entity_class"))) 
+        print "get_current_version %s" % (get_current_version(node_uuid, entities.get("entity_class"))) 
         inventory_out.append("1")
         inventory_out.append(entities.get("entity_type"))
         
@@ -321,7 +323,7 @@ def update_entities(entities):
 
         entity.entity_model = entities.get("entity_model")
         entity.description = entities.get("description")
-        entity.version = entities.get("current_version")
+        entity.version = get_current_version(node_uuid, entities.get("entity_class"))
 
        # if inventory_out[5] != 'None':
         #    entity.count += int(inventory_out[5])
@@ -339,7 +341,7 @@ def update_entities(entities):
             print "Not able to update %s" % entities.get("entity_class")
             sys.exit(1)
         print "updating Available version DB"
-        add_available_versions(db_entry.value.uuid, entities)
+        add_available_versions(db_entry.value.uuid, node_uuid, entities)
     return node_uuids
 
 def delete_available_db():
@@ -349,6 +351,13 @@ def delete_available_db():
       print("Attempt to clean LcmAvailable prior to inventory failed")
     else:
       print("Cleaned up LCM Available Version table")
+    ret1, ql1 = li.cpdb.get_entities(LcmEntity, "lcm_entity_v2")
+    for uuid, db_entry in ql1:
+        ret, status = li.cpdb.update_entity(
+            uuid, db_entry, delete=True)
+        if not ret:
+          log.ERROR("Error while deleting an entity %s " % uuid )
+          sys.exit(1)
     print_cpdb()
 
 def print_cpdb():
@@ -418,7 +427,6 @@ def main():
     print "calling the update_entities"
     for entities in managed_entities:
       uuids = update_entities(entities)
-      #add_available_versions(entities)
 
     print_cpdb()
 if __name__ == "__main__":
