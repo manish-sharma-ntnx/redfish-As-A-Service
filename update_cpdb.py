@@ -330,7 +330,7 @@ def update_entities(entities):
         entity.count += 1
 
         entity.entity_type = entities.get("entity_type")
-        #entity.hw_family = node_object.get_lcm_family()
+        entity.hw_family = genesis.get_lcm_family_from_cvm_host_layout(node_uuid)
         entity.last_detected_time_usecs = int(time.time() * 1e6)
         entity.ClearField("group_policy_enum_list")
         db_entry.value = entity
