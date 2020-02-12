@@ -25,7 +25,5 @@ dist/
 .awcache
 
 # Generated source-code #
-src/**/*.js
-src/**/*.js.map
 coverage/
 mydb.sql
