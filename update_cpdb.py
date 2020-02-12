@@ -241,9 +241,12 @@ def get_current_version(uuid, entity):
   url = "http://localhost:8004/components/1234" # +get_node_uuid
   data = requests.get(url)
   components_info = = data.json()["components"]
+  bmc = components_info["bmc"][0]["version"]
+  bmc = bmc.split()[0]
+  ".".join(bmc.split(".")[:-1])
 
-  if "bmc" in entity.lower(): return components_info["bmc"]["version"]
-  if "bios" in entity.lower(): return components_info["bios"]["version"]
+  if "bmc" in entity.lower(): return bmc
+  if "bios" in entity.lower(): return components_info["bios"][0]["version"]
 
 def download_rim_url(url):
     """
