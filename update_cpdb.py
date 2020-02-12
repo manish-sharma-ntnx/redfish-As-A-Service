@@ -21,6 +21,7 @@ from framework.main.lcm_framework_pb2 import LcmAvailableVersionV2 as LcmAvailab
 from cluster.lcm.interface import LcmInterface
 from framework.main.utils.cpdb_utils import CpdbUtils
 import framework.main.consts as consts
+#from utils.zeus_utils import ZeusUtils
 
 
 BUILDS = "builds"
@@ -265,6 +266,8 @@ def add_available_versions(uuid, entities):
                                                        proto=False)
     if not ret:
         print "Unable to update the available versin  %s" % msg
+    LAST_INVENTORY_TIME = "/appliance/logical/lcm/last_inventory_time"
+    li.zeus.set_zknode(LAST_INVENTORY_TIME, str(time.time()))
 
 def update_entities(entities):
     """
@@ -356,6 +359,8 @@ def main():
                       help="Path of the rim_config.json file")
     parser.add_option("-d", "--delete", action="store_true", dest="delete",
                       help="Delete the available DB")
+    parser.add_option("-p", "--print", action="store_true", dest="print_db",
+                      help="Print the available DB")
     options, args = parser.parse_args()
 
     print "parsing options"
@@ -370,6 +375,9 @@ def main():
         json_loc = os.path.join(os.getcwd(), 'metadata.json')
     elif options.delete:
         delete_available_db()
+        sys.exit(0)
+    elif options.print_db:
+        print_cpdb()
         sys.exit(0)
     else:
         parser.error("\nrim_config.json using -c/--config or "
