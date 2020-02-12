@@ -1,0 +1,71 @@
+@import (reference) '../../styles/main.less';
+
+.ntnx-alert {
+  &.ant-alert {
+    .font-styling(@default-font-size; @font-weight-medium; 22px;);
+
+    position: static;
+    border-radius: 0;
+    padding: 14px 20px;
+    border: none;
+    margin: 0;
+    display: flex;
+
+    .ant-alert-message {
+      flex-grow: 1;
+    }
+
+    .alert-color-mixin (@bg-color, @box-shadow-color, @font-color) {
+      background-color: @bg-color;
+      color: @font-color;
+
+      .close-icon {
+        path {
+          stroke: @font-color;
+        }
+      }
+    }
+
+    &.ntnx-alert-inline {
+      border-radius: 4px;
+      box-shadow: none;
+    }
+
+    &-warning {
+      .alert-color-mixin(@light-yellow-3, @light-yellow-2, @dark-yellow-2);
+    }
+
+    &-success {
+      .alert-color-mixin(@light-green-3, @light-green-2, @dark-green-2);
+    }
+
+    &-error {
+      .alert-color-mixin(@light-red-3, @light-red-2, @dark-red-2);
+    }
+
+    &-info {
+      .alert-color-mixin(@light-blue-3, @light-blue-2, @dark-blue-2);
+    }
+
+    &-supplementary {
+      .alert-color-mixin(@light-gray-3, @light-gray-2, @dark-gray-2);
+    }
+
+    .ant-alert-close-icon {
+      right: auto;
+      top: auto;
+      overflow: visible;
+      position: relative;
+      line-height: 22px;
+      height: auto;
+      margin-left: 20px;
+
+      .ntnx-icon {
+        position: relative;
+        top: 1px;
+        height: 10px;
+        width: 10px;
+      }
+    }
+  }
+}

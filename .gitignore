@@ -1,0 +1,31 @@
+# Logs #
+/logs
+*.log
+*.log*
+
+# Node files #
+lcm-ui/node_modules/
+lcm-ui/npm-debug.log
+lcm-ui/yarn-error.log
+
+# OS generated files #
+.DS_Store
+Thumbs.db
+.tmp/
+
+# Typing #
+typings/
+
+# Dist #
+dist/
+
+# IDE #
+.idea/
+*.swp
+.awcache
+
+# Generated source-code #
+src/**/*.js
+src/**/*.js.map
+coverage/
+mydb.sql

@@ -1,0 +1,19 @@
+@import (reference) '../../styles/main.less';
+
+.ntnx-sorter {
+  @default-width: 7px;
+  @default-height: 7px;
+
+  // Both icons
+  .icon-container {
+    width: @default-width;
+    height: @default-height;
+    display: block;
+    line-height: 0;
+    overflow: hidden;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
