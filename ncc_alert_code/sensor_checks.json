@@ -1,0 +1,52 @@
+plugin_schema_list {
+  name: "cpu_temperature_check"
+  executable_name: "health_checks hardware_checks sensor_checks cpu_temperature_check"
+  check_schema_list {
+    id: "106090"
+    name: "Test CPU Temperature check"
+    check_entities_list: "Node"
+    check_component_list: "Node"
+    affected_entities_list: kNode
+    scope: kNode
+    scheduler_params {
+      interval_secs: 60
+      enabled: true
+    }
+    description: "Check the CPU Temperature"
+    cause_list: "Cause List 1"
+    resolution_list: "Resolution List 1"
+    impact_list: "Impact List 1"
+    run_on_prism_central_vm: false
+    run_on_xi_pc: false
+    is_health_check: true
+    supported_hardware_model_list: "NX-.*"
+    classification_list: "Hardware"
+    classification_list: "Node"
+    impact_type_list: "Availability"
+    alert_config {
+      critical_threshold {
+        num_failures_to_alert: 1
+        enable_alert: true
+      }
+      alert_smart_title: "{msg}"
+      alert_title: "Test Check"
+      alert_msg: "{msg}"
+      unnamed_context_list: "cpu"
+      num_successes_to_resolve: 1
+      auto_resolve_config {
+        supported: true
+      }
+    }
+    kb_num: "1234"
+    check_metadata {
+      ncc_version: "Unknown"
+      source_jira_ticket: "TBD"
+      fix_jira_ticket: "NA"
+      component: kPlatformSolutions
+      hw_specific: False
+      hypervisor_specific: False
+      comment_list: "NA"
+    }
+  }
+}
+
