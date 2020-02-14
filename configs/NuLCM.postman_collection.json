@@ -1,0 +1,197 @@
+{
+	"info": {
+		"_postman_id": "c57170fc-4354-4b08-843b-0222c5b40833",
+		"name": "NuLCM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get CredStore",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb21lIjoicGF5bG9hZCJ9.4twFt5NiznN84AWoo1d7KO1T_yoc0Z6XOpOVswacPZg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/manish.sharma/Downloads/test.tgz",
+							"disabled": true
+						},
+						{
+							"key": "data",
+							"value": "\"{'name': 'test' , 'md5sum': 'abc', 'filename': 'test.tgz', 'activate': true }\"",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://10.2.161.46:8005/credentials",
+					"protocol": "http",
+					"host": [
+						"10",
+						"2",
+						"161",
+						"46"
+					],
+					"port": "8005",
+					"path": [
+						"credentials"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post CredStore",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb21lIjoicGF5bG9hZCJ9.4twFt5NiznN84AWoo1d7KO1T_yoc0Z6XOpOVswacPZg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"bmc_ip\": \"10.2.129.68\",\n            \"username\": \"ADMIN\",\n            \"password\": \"Nutanix1234\"\n}"
+				},
+				"url": {
+					"raw": "http://10.2.161.46:8005/credentials",
+					"protocol": "http",
+					"host": [
+						"10",
+						"2",
+						"161",
+						"46"
+					],
+					"port": "8005",
+					"path": [
+						"credentials"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET RedFish components data",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb21lIjoicGF5bG9hZCJ9.4twFt5NiznN84AWoo1d7KO1T_yoc0Z6XOpOVswacPZg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"bmc_ip\": \"10.2.129.68\",\n            \"username\": \"ADMIN\",\n            \"password\": \"Nutanix1234\"\n}"
+				},
+				"url": {
+					"raw": "http://10.2.161.46:8004/components/1234",
+					"protocol": "http",
+					"host": [
+						"10",
+						"2",
+						"161",
+						"46"
+					],
+					"port": "8004",
+					"path": [
+						"components",
+						"1234"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET RedFish host data",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb21lIjoicGF5bG9hZCJ9.4twFt5NiznN84AWoo1d7KO1T_yoc0Z6XOpOVswacPZg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"bmc_ip\": \"10.2.129.68\",\n            \"username\": \"ADMIN\",\n            \"password\": \"Nutanix1234\"\n}"
+				},
+				"url": {
+					"raw": "http://10.2.161.46:8004/hosts",
+					"protocol": "http",
+					"host": [
+						"10",
+						"2",
+						"161",
+						"46"
+					],
+					"port": "8004",
+					"path": [
+						"hosts"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

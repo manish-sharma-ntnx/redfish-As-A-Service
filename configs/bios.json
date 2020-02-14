@@ -1,0 +1,37 @@
+{
+  "module_type": "update",
+  "hw_families": ["smc_gen_11"],
+  "flags": ["reboot_host"],
+  "library_modules": [
+    "nutanix.tools",
+    "nutanix.hypervisor_tools",
+    "dummy.dummy_nx_redpool.tools"
+  ],
+  "enumeration_platforms": ["esx", "ahv", "hyperv"],
+  "update_platforms": ["esx", "ahv", "hyperv"],
+  "minimum_interface_version": {
+    "esx": 1.3,
+    "hyperv": 3.8,
+    "ahv": 2.0
+  },
+  "managed_entities":
+  [
+    {
+      "entity_class": "REDFISH BIOS",
+      "entity_model": "NX-TDT-4NL3-G7",
+      "description": "Current BIOS firmware version",
+      "flags": [],
+      "entity_type": "firmware",
+      "versions": [
+        {
+          "version": "PB42.200",
+          "status": "recommended",
+          "flags": [],
+          "image": "dummy.dummy_nx_redpool.bios.image",
+          "update_library_modules": []
+        }
+      ]
+    }
+  ]
+}
+

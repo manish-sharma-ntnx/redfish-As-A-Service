@@ -1,0 +1,38 @@
+{
+  "module_type": "update",
+  "hw_families": ["smc_gen_11"],
+  "flags": [],
+  "library_modules": [
+    "nutanix.tools",
+    "nutanix.hypervisor_tools",
+    "dummy.dummy_nx_redpool.tools"
+  ],
+  "enumeration_platforms": ["esx", "ahv", "hyperv"],
+  "semantic_version": true,
+  "update_platforms": ["esx", "ahv", "hyperv"],
+  "minimum_interface_version": {
+    "esx": 1.3,
+    "hyperv": 3.8,
+    "ahv": 2.0
+  },
+  "managed_entities":
+  [
+    {
+      "entity_class": "REDFISH BMCs",
+      "entity_model": "ASPEED",
+      "description": "Current BMC firmware version",
+      "flags": [],
+      "entity_type": "firmware",
+      "versions": [
+        {
+          "version": "9.09",
+          "status": "recommended",
+          "flags": [],
+          "image": "dummy.dummy_nx_redpool.bmc.image",
+          "update_library_modules": []
+        }
+      ]
+    }
+  ]
+}
+
